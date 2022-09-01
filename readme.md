@@ -4,7 +4,10 @@ Basic docker file for running an API to allow openhab to log powerusage gtom the
 Rename the envfile.sample to envfile and add your credentials for the growatt server.
 
 Needs docker installed on the host and the JSONPath Transformation addon installed in openhab
----
+
+Example docker launch following the build:
+`code`  docker run --env-file ./envfile -p 5000:5000 -it gwdocker
+
 Code to config the HTTP URL Thing in openhab:
 
 ```
