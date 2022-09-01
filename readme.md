@@ -1,9 +1,13 @@
+# growatt API
 Basic docker file for running an API to allow openhab to log powerusage gtom the growatt server.
-rename the envfile.sample to envfile and add your creds for the growatt server.
-needs docker installed on the host and the JSONPath Transformation addon installed in openhab
+
+Rename the envfile.sample to envfile and add your credentials for the growatt server.
+
+Needs docker installed on the host and the JSONPath Transformation addon installed in openhab
+---
 Code to config the HTTP URL Thing in openhab:
 
-`code`
+```
 UID: http:url:0b7207acc3
 label: HTTP URL Thing
 thingTypeUID: http:url
@@ -26,4 +30,4 @@ channels:
     configuration:
       mode: READONLY
       stateTransformation: JSONPATH:$.plant_info.deviceList[0].power
-`code`
+```
