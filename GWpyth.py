@@ -12,7 +12,7 @@ gwapi = growattServer.GrowattApi()
 app = Flask(__name__)
 api = Api(app)
 
-app.config["DEBUG"]=True
+#app.config["DEBUG"]=True
 
 class Reading(Resource):
     def get(self):
