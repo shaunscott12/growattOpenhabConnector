@@ -6,23 +6,32 @@ import ast
 
 USER = os.getenv('API_USER')
 PASSWORD = os.getenv('API_PASSWORD')
+FAILED_LOGIN_COUNT = 0
 gwapi = growattServer.GrowattApi()
 
 app = Flask(__name__)
 api = Api(app)
 
-app.config["DEBUG"]=True
+#app.config["DEBUG"]=True
 
 class Reading(Resource):
     def get(self):
-         plant_info = gwapi.plant_info(plant_id)
-         return{'plant_info': plant_info},200
+        try:
+            plant_info = gwapi.plant_info(plant_id)
+        except Exception:
+            global FAILED_LOGIN_COUNT
+            FAILED_LOGIN_COUNT += 1
+            GWLogin()
+        else:
+            return{'plant_info': plant_info},200
 
 api.add_resource(Reading, '/reading') # '/reading' is the entry point
 @app.route('/', methods=['GET'])
 def home():
     return "<h1>Growatt Server REST</h1><p>This site is a prototype API for reading growatt server data.</p><p>Read URL is <host>/reading"
 
+def GWLogin():
+    return gwapi.login(USER, PASSWORD)
 
 login_response = gwapi.login(USER, PASSWORD)
 plantlist = gwapi.plant_list(login_response['user']['id'])
